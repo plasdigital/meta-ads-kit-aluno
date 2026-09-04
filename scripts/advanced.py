@@ -2,7 +2,7 @@
 """
 Meta Ads - Operacoes Avancadas
 Duplicacao de campanhas/adsets/ads, swap de url_tags, batch operations.
-Funcionalidades que NAO existem no MCP original.
+Sao as operacoes que a interface da Meta nao faz em lote.
 
 Uso: python3 scripts/advanced.py <subcomando> [args]
 """
