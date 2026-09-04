@@ -1,9 +1,8 @@
 # Criar o aplicativo na Meta (e ligar o Claude Code nele) — manual do zero
 
 > **Objetivo:** sair de "não tenho nada" e chegar a um **aplicativo criado no Meta for Developers**,
-> com o **Claude Code enxergando ele** (MCP `meta-devtools`) e **falando com a Graph API** (token +
-> primeira chamada que responde).
-> **Ferramentas:** `developers.facebook.com` · `business.facebook.com` · MCP `meta-devtools` · Graph API Explorer · `curl`/Node
+> e **falando com a Graph API** (token + primeira chamada que responde).
+> **Ferramentas:** `developers.facebook.com` · `business.facebook.com` · Graph API Explorer · os `scripts/` desta pasta
 > **Entrada:** um e-mail e uma pessoa disposta a criar uma conta no Facebook
 > **Saída:** App ID na mão, app aparecendo para a IA, e uma chamada à Graph API devolvendo JSON
 >
@@ -23,7 +22,7 @@ Este documento é **referência, não resumo**. Ninguém lê tudo.
 | saber o que precisa ter **antes** do primeiro clique | §2 — a corrente do zero |
 | parar de confundir portfólio, app, WABA e Página | §3 — os nomes que colidem |
 | **criar o app**, tela por tela | §4 |
-| ligar o Claude Code no painel (MCP) | §5 |
+| por que aqui não tem MCP | §5 |
 | falar com a Graph API pela primeira vez | §6 |
 | entender por que "funciona pra mim e não pro cliente" | §7 — modo e nível de acesso |
 | o erro que você está vendo agora | §8 — catálogo |
@@ -227,59 +226,26 @@ em ~24 horas** — e aí a integração morre sozinha no dia seguinte, com um er
 
 ---
 
-## 5. Ligar o Claude Code no painel — o MCP `meta-devtools`
+## 5. Aqui não tem MCP — quem opera a conta são os scripts
 
-É o servidor MCP **oficial da Meta**. Uma linha para instalar:
+Você vai achar tutorial mandando plugar um servidor MCP no agente para mexer em anúncio.
+**Esta pasta não usa nenhum**, e é decisão de projeto:
 
-```bash
-claude mcp add --transport http meta-devtools https://mcp.facebook.com/devtools --scope user
-```
-
-Depois, **dentro** do Claude Code: `/mcp` → `meta-devtools` → **Authenticate**. Abre o navegador,
-você entra com a sua conta de desenvolvedor e escolhe **quais apps** liberar.
-
-> `--scope user` faz valer em qualquer pasta do computador. Em Codex / Antigravity / Cursor o
-> transporte é o mesmo (HTTP + a mesma URL); só muda onde se declara o servidor.
-
-### O que ele faz — e o que ele **não** faz
-
-| | MCP `meta-devtools` | A Graph API (§6) |
+| | script (o que tem aqui) | MCP |
 |---|---|---|
-| O que é | o painel do app, dentro da IA | as chamadas de verdade |
-| Ver configuração, domínios, URLs | ✅ | ❌ |
-| Ver webhooks assinados | ✅ | ❌ |
-| Ver status de App Review e compliance | ✅ | ❌ |
-| Ver limite e volume de chamadas | ✅ | ❌ |
-| Buscar na documentação da Meta | ✅ | ❌ |
-| **Criar o app** | ❌ | ❌ |
-| Registrar número, enviar mensagem, criar template | ❌ | ✅ |
-| Gerar token | ❌ | ❌ (é na tela) |
-| Assinar webhook | ✅ *(a única escrita dele)* | ✅ |
+| roda no n8n, no cron, às 3 da manhã | sim | não — só dentro de uma conversa aberta |
+| você lê o código antes e confere o que rodou depois | sim | não |
+| continua de pé se o servidor do outro sair do ar | sim | não |
+| fala com a conta pelo SDK oficial da Meta | sim | — |
 
-> 🗣️ **A frase da aula:** *"O MCP vê, o script faz. E o MCP não cria o aplicativo pra você — quem
-> clica é você; o Claude é quem sabe onde clicar e quem diz o que está errado."*
->
-> Prometer que "a IA cria o app sozinha" gera frustração no minuto seguinte: a Meta **não expõe**
-> criação de app por API para terceiros.
+Tudo que você vai fazer com anúncio — criar campanha, planejar público, criar público
+personalizado, subir anúncio, editar em massa, otimizar, medir, ver saldo e auditar mudança
+— está em `scripts/`, chamando o SDK oficial `facebook-business`. O agente monta o comando;
+você lê e confirma.
 
-**Duas coisas que confundem quem faz isso pela primeira vez:**
-
-1. **A permissão é por app.** App que você não marcou na tela de consentimento simplesmente **não
-   aparece** para a IA. Sumir da lista **não** quer dizer que não existe.
-2. **A sessão não sobrevive a reinícios** do Claude Code. Reautenticar de vez em quando é normal,
-   não é defeito.
-
-**✅ Sinal de sucesso:** peça *"liste meus apps da Meta"*. O app novo aparece, com o App ID que você
-anotou no §4.1.
-
-### As perguntas que passam a valer a pena
-
-> *"esse app está inscrito em quais webhooks?"* · *"tem pendência de compliance ou de App Review?"*
-> *"estou perto de estourar algum limite de chamadas?"* · *"o que mudou na API que eu uso?"*
-
-O caso que sozinho justifica o MCP é o **webhook verde mas mudo**: a URL foi verificada, tudo parece
-certo na tela, e nenhuma mensagem chega — porque o **campo** nunca foi assinado. Descobrir isso na
-mão leva minutos de navegação; com o MCP é uma pergunta.
+NUNCA instale MCP de terceiro para mexer em anúncio (`fb-ads-mcp-server` e parecidos): é
+entregar o token que gasta o seu dinheiro para código de estranho — e os scripts daqui já
+fazem o que eles prometem.
 
 ---
 
@@ -398,8 +364,6 @@ de permissão nunca analisada.
 | Erro **10** ou **#2655111** | falta Acesso Avançado → falta App Review |
 | A tela manda escolher **"tipo do app: Negócios"** e o botão não existe | você está seguindo um tutorial anterior ao modelo de casos de uso (§4.0) |
 | O caso de uso errado ficou no app e não sai | **não sai mesmo.** Casos de uso não são removíveis (§4.2) |
-| O app não aparece para a IA depois do `/mcp` | não foi marcado na tela de consentimento. Reautentique e marque (§5) |
-| O MCP some depois de fechar o Claude Code | a sessão não persiste. Reautenticar é normal |
 | Webhook verificado e nenhuma mensagem chega | verificar a URL **não é** assinar o campo. Falta assinar (`messages`, por exemplo) |
 | Funciona na sua conta e falha na do cliente | modo ou nível de acesso (§7) — não é o código |
 | `grant_status: REJECTED` numa permissão que ninguém pediu | estado padrão de permissão nunca analisada. Não é reprovação |
@@ -414,8 +378,6 @@ de permissão nunca analisada.
 - [ ] App criado, com **App ID anotado**
 - [ ] Caso de uso escolhido **com consciência de que não sai depois**
 - [ ] Portfólio conectado ao app
-- [ ] MCP `meta-devtools` instalado e autenticado, **com este app marcado**
-- [ ] `"liste meus apps da Meta"` devolve o app com o App ID certo
 - [ ] Usuário do sistema criado e **token permanente** guardado no `.env.local`
 - [ ] 🎯 **A prova:** `GET /v23.0/me` devolve JSON com `id`
 
@@ -427,7 +389,7 @@ de permissão nunca analisada.
 
 ## 10. Fontes — e a data em que cada uma foi lida
 
-Tudo conferido em **01/set/2026**, na documentação oficial (via MCP `meta-devtools` e leitura direta):
+Tudo conferido em **01/set/2026**, na documentação oficial da Meta:
 
 | Assunto | Onde |
 |---|---|

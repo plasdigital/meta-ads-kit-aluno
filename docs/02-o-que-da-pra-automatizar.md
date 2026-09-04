@@ -104,7 +104,25 @@ scripts/advanced.py duplicate-campaign --id 123 --deep
 
 ## 📊 Medir e conferir
 
-### 7. Análise de campanhas
+### 7. Alerta de saldo
+
+Conta de anúncio que fica sem saldo para de entregar no meio do dia, e você só descobre quando o
+resultado some. O saldo, o total gasto e o limite de gasto saem numa chamada de leitura — é a
+automação mais barata desta lista e a que mais evita prejuízo.
+
+```
+scripts/read.py account-details --id act_123
+```
+
+Vem `balance` (o que resta em conta pré-paga), `amount_spent` (o acumulado) e `account_status`
+(se a conta foi desativada). Ligado no n8n, vira o aviso que chega antes de a entrega parar: *"o saldo caiu abaixo do
+limite que você definiu"*.
+
+**Exige:** só leitura.
+⚠️ Cartão de crédito no lugar de saldo pré-pago não mostra `balance` — nesse caso o que vale
+acompanhar é o `spend_cap` e o gasto do dia.
+
+### 8. Análise de campanhas e envio de relatórios
 
 A pergunta "como foi a semana?" respondida em segundos, no nível que você quiser — conta, campanha,
 conjunto ou anúncio —, quebrada por idade, gênero, região ou posicionamento.
@@ -116,12 +134,12 @@ scripts/insights.py campaign --id 123 --date-preset last_30d --breakdowns age,ge
 
 **Exige:** só `ads_read`. **É por aqui que se começa.**
 
-### 8. Envio de relatórios
+#### O mesmo número, chegando sozinho
 
-O mesmo número do item 7, mas chegando sozinho: no seu e-mail, no seu WhatsApp ou no grupo do
+O mesmo número de cima, mas chegando sozinho: no seu e-mail, no seu WhatsApp ou no grupo do
 cliente, todo dia no mesmo horário, com o seu computador desligado.
 
-**Exige:** o n8n do [passo 6](../COMECE-AQUI.md) — é ele que tem o relógio.
+**Exige:** o n8n do [passo 5](../COMECE-AQUI.md) — é ele que tem o relógio.
 👉 [`04-n8n-o-que-roda-sozinho.md`](04-n8n-o-que-roda-sozinho.md)
 
 ### 9. Auditoria de mudanças na conta
@@ -142,10 +160,10 @@ scripts/read.py activities-by-adset --adset 123
 
 | Semana | O que fazer |
 |---|---|
-| **1** | só os itens 7 e 9 — leia, meça, confira contra o Gerenciador. Zero risco |
+| **1** | só os itens 7, 8 e 9 — saldo, métrica e auditoria. Leitura pura, zero risco |
 | **2** | item 2 (planejar público) e item 5 em uma edição pequena, com você olhando |
 | **3** | itens 1 e 4: monte uma campanha inteira pausada e revise na tela antes de ativar |
-| **4** | item 8: coloque o relatório para chegar sozinho |
+| **4** | ponha o relatório (item 8) e o alerta de saldo (item 7) para chegarem sozinhos |
 
 Automação em anúncio erra caro. A ordem acima existe para que, quando você deixar a IA criar
 campanha, você já saiba **conferir** o que ela criou.

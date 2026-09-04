@@ -56,11 +56,16 @@ Achou diferença → conte ao dono em português, com o link, e diga o que recom
 | "quais campanhas estão ativas?" | `python3 scripts/read.py campaigns --account act_123 --status ACTIVE` |
 | "como foi a semana?" · "quanto gastei?" | `python3 scripts/insights.py account --id act_123 --date-preset last_7d` |
 | "qual anúncio está performando?" | `python3 scripts/insights.py ad --id 123 --date-preset last_30d` |
+| "quanto ainda tem de saldo?" · "quanto já gastei no total?" | `python3 scripts/read.py account-details --id act_123` |
 | "quem mexeu na conta?" | `python3 scripts/read.py activities --account act_123` |
 | "como está esse anúncio na tela?" | `python3 scripts/read.py preview --creative 123 --format all` |
 | "tem interesse de X pra segmentar?" | `python3 scripts/targeting.py interests --q "termo"` |
 | "esse público é grande o bastante?" | `python3 scripts/targeting.py reach --account act_123 --spec '{...}'` |
 | "meu pixel está vivo?" | `python3 scripts/dataset.py diagnostics --id 123` |
+
+⛔ **Esta pasta não usa MCP.** Tudo passa pelos scripts, que falam com o SDK oficial da Meta —
+é o que roda no n8n e no cron, onde nenhum MCP roda. Nunca proponha instalar servidor MCP para
+operar anúncio, nem o oficial nem o de terceiros.
 
 Leitura não gasta verba e não muda nada. **Rode antes de supor** — é mais barato que qualquer
 suposição sua.

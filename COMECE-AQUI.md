@@ -10,12 +10,12 @@ telas da Meta — a parte de terminal são três comandos.
 
 | Você quer | Vai até o passo |
 |---|---|
-| só **ler e medir** a conta | **3** |
-| **criar e subir** anúncio | **5** |
-| coisa rodando **sozinha** (relatório diário, regra de otimização) | **6** |
-| **histórico** de métrica guardado | **7** |
+| só **ler e medir** a conta (inclusive o saldo) | **3** |
+| **criar e subir** anúncio, editar em massa, otimizar | **4** |
+| coisa rodando **sozinha** (relatório diário, alerta de saldo) | **5** |
+| **histórico** de métrica guardado | **6** |
 
-Passos 6 e 7 são opcionais para sempre. Muita gente vive bem parando no 5.
+Passos 5 e 6 são opcionais para sempre. Muita gente vive bem parando no 4.
 
 ---
 
@@ -111,31 +111,7 @@ o anúncio aparecer no Instagram, o `instagram_id` precisa estar aqui.
 
 ---
 
-## Passo 5 — (recomendado) O MCP oficial da Meta
-
-O MCP é um jeito de o seu agente enxergar o **painel** da Meta de dentro da conversa: configuração
-do app, webhooks, pendências de App Review, limite de chamadas.
-
-```bash
-claude mcp add --transport http meta-devtools https://mcp.facebook.com/devtools --scope user
-```
-
-Depois, `/mcp` no Claude Code para autenticar. Existe também um MCP de anúncios em
-`https://mcp.facebook.com/ads`.
-
-**Por que isto não substitui os scripts** — e é bom que não substitua:
-
-| | MCP | Scripts desta pasta |
-|---|---|---|
-| serve para | consultar o painel e diagnosticar, dentro do chat | **executar** na conta, com registro |
-| roda sozinho, sem você? | não | sim — é o que o n8n chama no passo 6 |
-| dá para auditar o que rodou? | difícil | é código: você lê antes e depois |
-
-Ou seja: **MCP para enxergar, script para operar.**
-
----
-
-## Passo 6 — (opcional) n8n, para o que roda sozinho
+## Passo 5 — (opcional) n8n, para o que roda sozinho
 
 Até aqui, tudo acontece quando você pede. O n8n é o que faz acontecer **sem você pedir**: o
 relatório que chega às 8h, a regra que avisa quando o custo por resultado estoura, a auditoria que
@@ -149,7 +125,7 @@ instala um na sua VPS.
 
 ---
 
-## Passo 7 — (opcional) Supabase, para guardar histórico
+## Passo 6 — (opcional) Supabase, para guardar histórico
 
 A Meta guarda os números, mas responde devagar e limita consulta. Se você quer **comparar hoje com
 o mês passado**, montar painel ou deixar o cliente olhando sozinho, precisa de um espelho — e o
@@ -166,5 +142,21 @@ Supabase grátis dá conta.
 - [ ] `insights.py` traz número que bate com o Gerenciador
 - [ ] o `.env` e o `contas.yaml` existem e **não** estão no Git (`git status` não pode citá-los)
 - [ ] você leu [`docs/00-use-com-responsabilidade.md`](docs/00-use-com-responsabilidade.md)
+
+---
+
+## Aqui não tem MCP — e é de propósito
+
+Quem opera a sua conta são os **scripts de `scripts/`**, chamando o SDK oficial da Meta
+(`facebook-business`). Nada desta pasta depende de servidor MCP nenhum:
+
+- **script roda em qualquer lugar** — no seu PC, no n8n, num cron da VPS, às 3 da manhã, sem
+  ninguém logado. MCP só existe dentro de uma conversa com um agente aberto;
+- **script é auditável** — é código: você lê antes de rodar e vê o que rodou depois;
+- **script é seu** — se um servidor sair do ar amanhã, a sua automação continua de pé.
+
+⛔ **Nunca instale MCP de terceiros para mexer em anúncio** (`fb-ads-mcp-server` e parecidos).
+Você estaria entregando o token que gasta o seu dinheiro para código de estranho — e os scripts
+daqui já fazem tudo o que eles prometem.
 
 Deu tudo certo? Pergunte ao agente: *"o que dá pra automatizar aqui?"* — e escolha a primeira.
