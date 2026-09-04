@@ -178,5 +178,12 @@ Para você não perder tempo procurando:
 - **Não escreve o criativo.** Ela sobe a imagem e o texto que você (ou a IA) produziu — a peça em si
   nasce fora daqui.
 - **Não edita criativo publicado.** Duplica e substitui; ver o item 5.
+- **Não cria público de engajamento nem de site.** Público de "quem viu 50% do vídeo", "quem
+  interagiu com o Instagram" ou "quem visitou tal página" ainda sai na tela do Gerenciador — aqui
+  os scripts criam o público de **lista de clientes** e o **semelhante** a partir de um existente.
+- **Não baixa os leads do formulário instantâneo.** A campanha de Cadastros sobe daqui; os leads
+  você busca no Gerenciador, no CRM integrado ou por um fluxo próprio.
+- **Não sobe imagem nem vídeo do seu computador** — só por URL pública. Hospede o arquivo antes
+  (o próprio Supabase do `docs/05` serve).
 - **Não te livra das políticas da Meta.** Anúncio reprovado continua reprovado, e conta restringida
   por automação abusiva é problema seu. Leia [`00-use-com-responsabilidade.md`](00-use-com-responsabilidade.md).
