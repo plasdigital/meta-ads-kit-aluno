@@ -1,0 +1,30 @@
+# Cadastro de contas — copie para contas.yaml e preencha com as suas.
+#
+# Serve para o agente resolver "sobe a campanha do <cliente>" sem voce ter que lembrar do act_.
+# Ele le este arquivo antes de qualquer operacao e traduz o nome para os IDs.
+#
+# Rode "scripts/read.py accounts" para ver as contas as quais o seu token tem acesso, e peca ao
+# agente para preencher isto com voce — ele sabe fazer as perguntas na ordem.
+#
+# ⚠️ Se voce versionar este arquivo, esta publicando a carteira de clientes da sua agencia.
+#    O .gitignore ja barra o contas.yaml — mantenha assim.
+
+clientes:
+
+  minha-empresa:
+    nome: "Minha empresa"
+    conta_anuncio: "act_123456789"
+    pagina_facebook: "123456789"      # o ID da Pagina do Facebook usada no anuncio
+    instagram_id: "123456789"         # obrigatorio para o anuncio aparecer no Instagram
+    instagram_username: "@seu_usuario"
+    moeda: "BRL"
+    notas: "conta principal"
+
+  # cliente-exemplo:
+  #   nome: "Cliente Exemplo"
+  #   conta_anuncio: "act_123456789"
+  #   pagina_facebook: "123456789"
+  #   instagram_id: "123456789"
+  #   instagram_username: "@seu_usuario"
+  #   moeda: "BRL"
+  #   notas: "so relatorio, nao mexer em campanha"

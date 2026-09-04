@@ -1,0 +1,11 @@
+# nunca versione o que da acesso a conta de anuncios com cartao cadastrado
+.env
+*.env
+contas.yaml
+historico.md
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+saidas/
+*.log
