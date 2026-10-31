@@ -35,7 +35,7 @@ Agora abra a pasta no seu agente:
 claude          # ou codex, ou o agente que você usa
 ```
 
-Dentro dele, diga: *"oi"*. Ele lê o `CLAUDE.md` e assume a condução.
+Dentro dele, diga: *"oi"*. Ele lê o `AGENTS.md` e assume a condução.
 
 ---
 

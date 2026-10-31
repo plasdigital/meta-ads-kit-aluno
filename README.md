@@ -48,7 +48,7 @@ Para *ler* a conta, os itens 1 a 4 bastam.
 | Arquivo | Para quem |
 |---|---|
 | `COMECE-AQUI.md` | **você**, se preferir ler na ordem em vez de conversar |
-| `CLAUDE.md` | **o agente de IA** — é isto que faz a pasta se explicar sozinha |
+| `AGENTS.md` | **o agente de IA** — é isto que faz a pasta se explicar sozinha |
 | `AGENTS.md` | Codex, Cursor, Antigravity |
 | `scripts/` | os 9 scripts Python: 60 comandos na sua conta |
 | `docs/` | o porquê de tudo: criar o app, o que automatizar, cada comando, n8n, Supabase |

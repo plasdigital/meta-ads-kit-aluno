@@ -1,7 +1,7 @@
 # Todas as operações, uma por uma
 
 > Esta é a **referência completa** dos scripts — 54 operações. Não precisa decorar nada: o
-> `CLAUDE.md` manda o seu agente consultar esta página antes de montar qualquer comando.
+> `AGENTS.md` manda o seu agente consultar esta página antes de montar qualquer comando.
 > Se você quer entender o caminho todo em vez de procurar um comando, comece pelo
 > `COMECE-AQUI.md`.
 
